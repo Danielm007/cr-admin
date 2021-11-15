@@ -1,0 +1,32 @@
+.category-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  margin: 20px 10px;
+}
+
+.category-item:last-child() {
+  margin-bottom: 0;
+}
+
+.category-item img {
+  border-radius: 10px;
+  max-width: 100% !important;
+}
+
+.category-item h3 {
+  color: white;
+  text-transform: uppercase;
+}
+
+/*Responsive Web Design*/
+@media (min-width: 768px) {
+  .category-item {
+    flex-direction: row;
+    margin: 20px 0;
+  }
+}

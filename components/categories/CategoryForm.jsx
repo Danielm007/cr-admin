@@ -4,6 +4,8 @@ import { ImagePicker } from "../images/ImagePicker";
 import { BackButton } from "../ui/BackButton";
 import { toast } from "react-toastify";
 import { axiosClient } from "../../api/api";
+import { loadImage } from "../../helpers/loadImage";
+import axios from "axios";
 
 export const CategoryForm = () => {
   //Capturar la imagen
@@ -29,22 +31,22 @@ export const CategoryForm = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("nombre", name);
-    formData.append("imagen", fileList[0].originFileObj);
-
     //Mandar peticion
-    toast.info("Guardando la nueva categoría...");
-    saveNewCategory(formData);
+    saveNewCategory();
   };
 
-  const saveNewCategory = async (formData) => {
+  const saveNewCategory = async () => {
     try {
-      const res = await axiosClient.post("/categorias/new", formData, {
+      //Obtenemos la url mandando a una api
+      const url = await loadImage(fileList[0].originFileObj);
+      toast.info("Guardando la nueva categoría...");
+      const body = { nombre: name, url };
+      const res = await axiosClient.post("/categorias/new", body, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       });
+
       if (res.data.ok) {
         toast.success("Categoría guardada");
         setName("");
@@ -74,7 +76,6 @@ export const CategoryForm = () => {
           </div>
           <label>Agregar Imagen</label>
           <ImagePicker onChange={onChange} fileList={fileList} />
-
           <button className="btn">Guardar</button>
         </fieldset>
       </form>

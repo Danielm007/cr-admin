@@ -30,6 +30,13 @@
   border-radius: 10px;
 }
 
+.edit {
+  background-color: blue;
+  color: white;
+  padding: 6px;
+  border-radius: 10px;
+}
+
 /*Responsive Web Design*/
 @media (min-width: 768px) {
   .category-item {

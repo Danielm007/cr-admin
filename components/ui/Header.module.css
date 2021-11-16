@@ -1,3 +1,16 @@
+.header {
+  position: fixed;
+  background-color: black;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 0 20px;
+  height: auto;
+  border-bottom: 1px solid white;
+  height: 100px;
+}
+
 .header nav ul {
   display: flex;
 }
@@ -10,4 +23,11 @@
 
 .header a {
   color: white !important;
+}
+
+@media (min-width: 768px) {
+  .header {
+    position: relative;
+    border: none;
+  }
 }

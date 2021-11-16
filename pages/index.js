@@ -1,10 +1,12 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
     <div className="admin">
-      <p>
-        Bienvenido al panel de administrador de Comercial Cristo Rey {"⭐️ "},
-        elige una opción del menú por favor
-      </p>
+      <div className="admin-img">
+        <Image alt="cristo-rey" src="/fondo.JPG" layout="fill" />
+      </div>
+      <p>Admin Comercial Cristo Rey {"⭐️ "}</p>
     </div>
   );
 }

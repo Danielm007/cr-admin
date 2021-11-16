@@ -1,5 +1,6 @@
 import React from "react";
+import { CategoryForm } from "../components/categories/CategoryForm";
 
 export default function AgregarCategoria() {
-  return <div>Agregar Categoria</div>;
+  return <CategoryForm />;
 }

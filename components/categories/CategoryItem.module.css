@@ -23,6 +23,13 @@
   text-transform: uppercase;
 }
 
+.icon {
+  background-color: red;
+  color: white;
+  padding: 6px;
+  border-radius: 10px;
+}
+
 /*Responsive Web Design*/
 @media (min-width: 768px) {
   .category-item {

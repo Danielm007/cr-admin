@@ -1,3 +1,5 @@
-.footer {
+.footer p {
+  display: block;
   text-align: center;
+  padding: 10px 0 20px 0;
 }

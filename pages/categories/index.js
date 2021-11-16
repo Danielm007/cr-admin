@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { axiosClient } from "../../api/api";
 import { CategoryList } from "../../components/categories/CategoryList";
+import { BackButton } from "../../components/ui/BackButton";
 
 const Categories = () => {
   const [categorias, setCategorias] = useState([]);
@@ -19,7 +20,12 @@ const Categories = () => {
     }
   };
 
-  return <CategoryList categorias={categorias} />;
+  return (
+    <>
+      <BackButton />
+      <CategoryList categorias={categorias} />
+    </>
+  );
 };
 
 export default Categories;

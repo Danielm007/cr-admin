@@ -1,0 +1,34 @@
+.form {
+  text-align: center;
+}
+
+.form fieldset {
+  padding: 20px;
+  border: 1px solid white;
+  border-radius: 20px;
+}
+
+.form legend {
+  background-color: transparent;
+  width: auto;
+  text-align: left;
+  font-size: 24px;
+}
+
+.form input {
+  outline: none;
+  padding: 5px;
+  background-color: transparent;
+  font-size: 17px;
+  border: 1px solid white;
+  border-radius: 10px;
+  margin: 10px 0;
+  text-align: center;
+}
+.form-control {
+  display: flex;
+  flex-direction: column;
+}
+/* @media(min-width: 768px){
+  .form{}
+} */

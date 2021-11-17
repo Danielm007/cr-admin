@@ -9,7 +9,6 @@ export const CategoryList = ({ categorias }) => {
   //Eliminar categoria
   const deleteCategory = async (id) => {
     try {
-      toast.info("Eliminando la categoría");
       const res = await axiosClient.delete(`/categorias/${id}`);
       if (res.data.ok) {
         router.reload();
@@ -21,13 +20,17 @@ export const CategoryList = ({ categorias }) => {
 
   return (
     <div>
-      {categorias.map((categoria) => (
-        <CategoryItem
-          key={categoria._id}
-          {...categoria}
-          handleDelete={deleteCategory}
-        />
-      ))}
+      {categorias ? (
+        categorias.map((categoria) => (
+          <CategoryItem
+            key={categoria._id}
+            {...categoria}
+            handleDelete={deleteCategory}
+          />
+        ))
+      ) : (
+        <p>No hay categorías</p>
+      )}
     </div>
   );
 };

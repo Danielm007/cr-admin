@@ -1,6 +1,13 @@
+import { useRouter } from "next/router";
 import Image from "next/image";
+import { useContext } from "react";
+import { Context } from "../context/Context";
 
 export default function Home() {
+  const {
+    state: { user },
+  } = useContext(Context);
+
   return (
     <div className="admin">
       <div className="admin-img">

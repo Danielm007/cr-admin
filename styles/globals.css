@@ -33,6 +33,14 @@ ul {
   font-size: 20px;
 }
 
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mt-50 {
+  margin-top: 50px;
+}
+
 @media (min-width: 768px) {
   .container {
     margin-top: 0;
@@ -92,11 +100,11 @@ ul {
 /* Botones */
 .btn {
   display: block;
-  margin: 0 auto;
+  margin: 20px auto;
   border: 1px solid white;
   background-color: transparent;
   padding: 5px 10px;
-  margin-top: 10px;
+
   border-radius: 10px;
   transition: all 0.3s ease-in-out;
 }
@@ -106,4 +114,37 @@ ul {
   transform: scale(1.035);
   background-color: white;
   color: black;
+}
+
+/*Estilos para formularios*/
+.form {
+  text-align: center;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+}
+
+.form input {
+  outline: none;
+  background-color: transparent;
+  border: 1px solid white;
+  padding: 5px;
+  text-align: center;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.form fieldset {
+  border-radius: 10px;
+  border: 1px solid white;
+  padding: 20px;
+}
+
+.form legend {
+  width: auto;
+  text-align: left;
+  margin-left: 10px;
+  font-size: 22px;
 }

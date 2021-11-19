@@ -1,0 +1,18 @@
+.searchbar {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 4fr 50px;
+  align-items: center;
+  border: 1px solid white;
+  grid-template-rows: 1fr;
+  border-radius: 10px;
+}
+
+.searchbar input {
+  border: none;
+  padding: 0;
+}
+
+.icon {
+  font-size: 24px;
+}

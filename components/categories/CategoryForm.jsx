@@ -25,6 +25,7 @@ export const CategoryForm = ({ category }) => {
             <label htmlFor="name">Nombre de la categoría</label>
             <input
               onChange={handleChange}
+              placeholder="Nombre de la categoría"
               type="text"
               id="name"
               value={name}

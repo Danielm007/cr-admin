@@ -3,11 +3,14 @@ import { axiosClient } from "../../api/api";
 import { CategoryList } from "../../components/categories/CategoryList";
 import { BackButton } from "../../components/ui/BackButton";
 import { LoadingScreen } from "../../components/ui/LoadingScreen";
+import { Check } from "../../helpers/check";
 
 const Categories = () => {
   //Estados de la aplicacion
   const [categorias, setCategorias] = useState([]);
   const [loading, setLoading] = useState(true);
+  //Check
+  Check();
   useEffect(() => {
     loadCategories();
   }, []);

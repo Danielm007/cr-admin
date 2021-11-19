@@ -10,9 +10,7 @@ export const CategoryList = ({ categorias }) => {
   const deleteCategory = async (id) => {
     try {
       const res = await axiosClient.delete(`/categorias/${id}`);
-      if (res.data.ok) {
-        router.reload();
-      }
+      toast.success(res.data.msg);
     } catch (err) {
       console.log(err);
     }

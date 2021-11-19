@@ -1,4 +1,3 @@
-import router from "next/router";
 import React, { createContext, useEffect, useReducer } from "react";
 import { toast } from "react-toastify";
 import { axiosClient } from "../api/api";
@@ -30,9 +29,9 @@ export const ContextProvider = ({ children }) => {
       toast.success(`Es bueno verte de vuelta ${res.data.user.nombre} 😊`);
     } catch (err) {
       if (err.response.data.msg === "Token no válido") {
-        toast.error("Tu sesión ha expirado vuelve a iniciar sesión por favor");
+        toast.error("Debes iniciar sesión 🤨");
         dispatch({ type: types.userLogout });
-        router.replace("/login");
+        localStorage.clear();
       }
     }
   };

@@ -1,10 +1,18 @@
-import router from "next/router";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useContext } from "react";
 import { toast } from "react-toastify";
 import { axiosClient } from "../../api/api";
+import { Context } from "../../context/Context";
 import { useForm } from "../../hooks/useForm";
+import { types } from "../../types/types";
 
 export const LoginForm = () => {
+  //Router declare
+  const router = useRouter();
+
+  //get the context to dispatch the handler
+  const { dispatch } = useContext(Context);
+
   //Custom-Hook to handle FormChanges
   const { formValues, handleInputChange } = useForm({
     email: "",
@@ -33,11 +41,14 @@ export const LoginForm = () => {
     try {
       const body = { email, password };
       const res = await axiosClient.post("/usuarios/login", body);
-      if (res.data.ok) {
-        router.push("/");
-        localStorage.setItem("token", res.data.token);
-      }
-      console.log(res);
+      //Save token in localStorage
+      localStorage.setItem("token", res.data.token);
+      //Dispatch the action to store the user
+      dispatch({ type: types.user, payload: res.data.user });
+      //Show notification
+      toast.success(`Es bueno verte de vuelta ${res.data.user.nombre} 😊`);
+      //Redirect the user to the index page
+      router.replace("/");
     } catch (error) {
       toast.error(error.response.data.msg);
     }

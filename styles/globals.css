@@ -126,7 +126,7 @@ ul {
   flex-direction: column;
 }
 
-.form input {
+.form-control input {
   outline: none;
   background-color: transparent;
   border: 1px solid white;

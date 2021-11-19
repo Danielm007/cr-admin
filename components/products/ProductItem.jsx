@@ -16,16 +16,18 @@ export const ProductItem = ({
 }) => {
   return (
     <div className={styles["product-item"]}>
-      <Image src={urlImagen} alt={nombre} height={150} width={150} />
       <div>
-        <p>{nombre}</p>
-        <p>Categoría: {categoria}</p>
-        <p>Especial: {especial}</p>
+        <Image src={urlImagen} alt={nombre} height={150} width={150} />
       </div>
       <div>
-        <p>Normal: {precio}</p>
-        <p>Mayorista: {mayorista}</p>
-        <p>Cantidad: {cantidad}</p>
+        <p className="negrita">{nombre}</p>
+        <p>Categoría: {categoria}</p>
+        <p>Especial: ${parseFloat(especial).toFixed(2)}</p>
+      </div>
+      <div>
+        <p>Normal: ${parseFloat(precio).toFixed(2)}</p>
+        <p>Mayorista: ${parseFloat(mayorista).toFixed(2)}</p>
+        <p>Disponibles: {cantidad}</p>
       </div>
       <div className={styles.acciones}>
         <Link href="/">

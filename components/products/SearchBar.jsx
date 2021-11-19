@@ -31,9 +31,12 @@ export const SearchBar = ({ onSearch }) => {
         `/productos/busqueda?search=${busqueda}`
       );
       if (data.ok) {
-        toast.success("Productos Cargados");
-        console.log(data);
         onSearch(data.productos);
+        if (data.productos.length === 0) {
+          toast.error("No se encontraron productos");
+        } else {
+          toast.success("Productos obtenidos");
+        }
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -49,6 +52,7 @@ export const SearchBar = ({ onSearch }) => {
           onChange={handleInputChange}
           value={search}
           placeholder="Buscar Producto"
+          autoComplete="off"
         />
       </div>
       <SearchOutlined className={styles.icon} onClick={handleSubmit} />

@@ -1,10 +1,12 @@
 .product-item {
   padding: 10px;
   border: 1px solid gray;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   align-items: center;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr) auto;
+  text-align: center;
+  align-content: center;
 }
 
 .product-item:last-child {
@@ -15,6 +17,9 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 10px;
+  width: auto;
+  margin: 0 auto;
+  height: auto;
 }
 
 .editar {
@@ -23,4 +28,13 @@
   color: white;
   padding: 5px;
   border-radius: 5px;
+}
+
+@media (min-width: 768px) {
+  .product-item {
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    column-gap: 10px;
+    text-align: left;
+  }
 }

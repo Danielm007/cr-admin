@@ -13,6 +13,7 @@ export const Check = () => {
   useEffect(() => {
     if (!user) {
       router.push("/login");
+      return null;
     }
     if (user && !user.admin) {
       router.push("/login");

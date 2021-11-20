@@ -5,8 +5,10 @@ import { axiosClient } from "../../api/api";
 import { ProductForm } from "../../components/products/ProductForm";
 import { BackButton } from "../../components/ui/BackButton";
 import { LoadingScreen } from "../../components/ui/LoadingScreen";
+import { Check } from "../../helpers/check";
 
 const ProductoEditar = () => {
+  Check();
   const router = useRouter();
   const { id } = router.query;
   const [product, setProduct] = useState(null);

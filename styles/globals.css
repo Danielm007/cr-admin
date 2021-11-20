@@ -153,6 +153,17 @@ ul {
   font-size: 22px;
 }
 
+.form select {
+  margin-top: 10px;
+  background-color: transparent;
+  color: white;
+  outline: none;
+  border: 1px solid white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
 .acciones {
   display: flex;
   justify-content: space-around;

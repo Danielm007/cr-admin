@@ -1,18 +1,29 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { axiosClient } from "../../api/api";
+import { Context } from "../../context/Context";
+import { types } from "../../types/types";
 import { BackButton } from "../ui/BackButton";
 import { Button } from "../ui/Button";
 import { LoadingScreen } from "../ui/LoadingScreen";
 import { ProductList } from "./ProductList";
 import { SearchBar } from "./SearchBar";
 
+//Productos por página
+const productosPorPágina = 10;
+
 export const ProductContainer = () => {
   const [pagActual, setPagActual] = useState(1);
+  const [pages, setPages] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [productos, setProductos] = useState([]);
   const [encontrados, setEncontrados] = useState([]);
+
+  //Get Products of ContextAPI
+  const {
+    state: { products },
+    dispatch,
+  } = useContext(Context);
 
   //Load products every time the page loads or the actualpage changes
   useEffect(() => {
@@ -24,10 +35,11 @@ export const ProductContainer = () => {
     setLoading(true);
     try {
       const { data } = await axiosClient.get(
-        `/productos?paginaActual=${pagActual}&limit=50`
+        `/productos?paginaActual=${pagActual}&limit=${productosPorPágina}`
       );
       setLoading(false);
-      setProductos(data.productos);
+      setPages(Math.ceil(parseInt(data.documents) / productosPorPágina));
+      dispatch({ type: types.loadProducts, payload: data.productos });
     } catch (err) {
       setLoading(false);
       toast.error(err.response.data.msg);
@@ -48,6 +60,20 @@ export const ProductContainer = () => {
     </Fragment>
   );
 
+  //HandleClickPrevious
+  const handleClickPrevious = () => {
+    if (pagActual > 1) {
+      setPagActual((prevState) => prevState - 1);
+    }
+  };
+
+  //HandleClickNext
+  const HandleClickNext = () => {
+    if (pagActual <= pages) {
+      setPagActual((prevState) => prevState + 1);
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -63,10 +89,18 @@ export const ProductContainer = () => {
             </Fragment>
           ) : (
             <Fragment>
-              <ProductList productos={productos} />
+              <ProductList productos={products} />
               <div className="acciones">
-                <Button text={anterior} />
-                <Button text={siguiente} />
+                <Button
+                  text={anterior}
+                  onClick={handleClickPrevious}
+                  disabled={pagActual > 1}
+                />
+                <Button
+                  onClick={HandleClickNext}
+                  disabled={pagActual >= pages}
+                  text={siguiente}
+                />
               </div>
             </Fragment>
           )}

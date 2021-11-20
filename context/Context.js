@@ -7,6 +7,7 @@ import { types } from "../types/types";
 const initialState = {
   user: null,
   products: [],
+  categories: [],
 };
 
 export const Context = createContext();

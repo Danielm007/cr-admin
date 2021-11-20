@@ -1,18 +1,22 @@
-import { useRouter } from "next/router";
-import React from "react";
+import React, { useContext } from "react";
 import { toast } from "react-toastify";
 import { axiosClient } from "../../api/api";
+import { Context } from "../../context/Context";
+import { types } from "../../types/types";
 import { CategoryItem } from "./CategoryItem";
 
 export const CategoryList = ({ categorias }) => {
-  const router = useRouter();
+  const { dispatch } = useContext(Context);
   //Eliminar categoria
   const deleteCategory = async (id) => {
     try {
-      const res = await axiosClient.delete(`/categorias/${id}`);
-      toast.success(res.data.msg);
+      const { data } = await axiosClient.delete(`/categorias/${id}`);
+      if (data.ok) {
+        dispatch({ type: types.removeCategory, payload: { id } });
+        toast.success(data.msg);
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data.msg);
     }
   };
 

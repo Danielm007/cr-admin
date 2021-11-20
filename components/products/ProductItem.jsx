@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./ProductItem.module.css";
 import Image from "next/image";
 import { DeleteIcon } from "../ui/DeleteIcon";
 import Link from "next/link";
 import { EditFilled } from "@ant-design/icons";
+import { toast } from "react-toastify";
+import { axiosClient } from "../../api/api";
+import { Context } from "../../context/Context";
+import { types } from "../../types/types";
 
 export const ProductItem = ({
   nombre,
@@ -13,7 +17,25 @@ export const ProductItem = ({
   urlImagen,
   cantidad,
   especial,
+  _id: id,
 }) => {
+  //ContextAPI
+  const { dispatch } = useContext(Context);
+
+  //handleDelete
+  const handleDelete = async (id) => {
+    toast.info("Eliminando producto...");
+    try {
+      const { data } = await axiosClient.delete(`/productos/producto/${id}`);
+      if (data.ok) {
+        toast.success(data.msg);
+      }
+      dispatch({ type: types.removeProduct, payload: { id } });
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
   return (
     <div className={styles["product-item"]}>
       <div>
@@ -35,7 +57,7 @@ export const ProductItem = ({
             <EditFilled className={styles.editar} />
           </a>
         </Link>
-        <DeleteIcon />
+        <DeleteIcon onClick={() => handleDelete(id)} />
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ import { ProductList } from "./ProductList";
 import { SearchBar } from "./SearchBar";
 
 //Productos por página
-const productosPorPágina = 10;
+const productosPorPágina = 20;
 
 export const ProductContainer = () => {
   const [pagActual, setPagActual] = useState(1);
@@ -30,6 +30,22 @@ export const ProductContainer = () => {
     loadProducts();
   }, [pagActual]);
 
+  //Calculate total paged needed
+  useEffect(() => {
+    loadPages();
+  }, []);
+
+  const loadPages = async () => {
+    try {
+      const { data } = await axiosClient.get("/productos/total");
+      if (data.ok) {
+        setPages(Math.ceil(parseInt(data.documentos) / productosPorPágina));
+      }
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
   //Function to load products
   const loadProducts = async () => {
     setLoading(true);
@@ -38,7 +54,6 @@ export const ProductContainer = () => {
         `/productos?paginaActual=${pagActual}&limit=${productosPorPágina}`
       );
       setLoading(false);
-      setPages(Math.ceil(parseInt(data.documents) / productosPorPágina));
       dispatch({ type: types.loadProducts, payload: data.productos });
     } catch (err) {
       setLoading(false);
@@ -68,7 +83,7 @@ export const ProductContainer = () => {
   };
 
   //HandleClickNext
-  const HandleClickNext = () => {
+  const handleClickNext = () => {
     if (pagActual <= pages) {
       setPagActual((prevState) => prevState + 1);
     }
@@ -93,12 +108,12 @@ export const ProductContainer = () => {
               <div className="acciones">
                 <Button
                   text={anterior}
-                  onClick={handleClickPrevious}
-                  disabled={pagActual > 1}
+                  handleClick={handleClickPrevious}
+                  disabled={pagActual === 1}
                 />
                 <Button
-                  onClick={HandleClickNext}
-                  disabled={pagActual >= pages}
+                  handleClick={handleClickNext}
+                  disabled={pagActual === pages}
                   text={siguiente}
                 />
               </div>

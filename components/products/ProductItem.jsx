@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import { axiosClient } from "../../api/api";
 import { Context } from "../../context/Context";
 import { types } from "../../types/types";
+import { FavoriteIcon } from "../ui/FavoriteIcon";
+import axios from "axios";
 
 export const ProductItem = ({
   nombre,
@@ -18,6 +20,7 @@ export const ProductItem = ({
   cantidad,
   especial,
   _id: id,
+  favorito,
 }) => {
   //ContextAPI
   const { dispatch } = useContext(Context);
@@ -29,8 +32,20 @@ export const ProductItem = ({
       const { data } = await axiosClient.delete(`/productos/producto/${id}`);
       if (data.ok) {
         toast.success(data.msg);
+        dispatch({ type: types.removeProduct, payload: { id } });
       }
-      dispatch({ type: types.removeProduct, payload: { id } });
+    } catch (err) {
+      toast.error(err.response.data.msg);
+    }
+  };
+
+  const handleAddFavorites = async (id) => {
+    try {
+      const { data } = await axiosClient.put(`/productos/favorito/${id}`);
+      if (data.ok) {
+        toast.success(data.msg);
+        dispatch({ type: types.toggleProduct, payload: data.producto });
+      }
     } catch (err) {
       toast.error(err.response.data.msg);
     }
@@ -52,7 +67,11 @@ export const ProductItem = ({
         <p>Disponibles: {cantidad}</p>
       </div>
       <div className={styles.acciones}>
-        <Link href="/">
+        <FavoriteIcon
+          favorite={favorito}
+          handleClick={() => handleAddFavorites(id)}
+        />
+        <Link href={`/products/${id}`}>
           <a>
             <EditFilled className={styles.editar} />
           </a>

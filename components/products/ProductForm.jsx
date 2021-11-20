@@ -7,6 +7,7 @@ import { useForm } from "../../hooks/useForm";
 import { ImagePicker } from "../images/ImagePicker";
 import { Button } from "../ui/Button";
 import { LoadingScreen } from "../ui/LoadingScreen";
+import Image from "next/image";
 
 export const ProductForm = ({ producto }) => {
   const router = useRouter();
@@ -85,7 +86,7 @@ export const ProductForm = ({ producto }) => {
 
     toast.info("Guardando el proyecto...");
     try {
-      const url = await loadImage(fileList[0]);
+      const url = await loadImage(fileList[0].originFileObj);
       const body = {
         nombre,
         precio,
@@ -100,6 +101,8 @@ export const ProductForm = ({ producto }) => {
         toast.success(data.msg);
         //Reset form values
         reset();
+        //reset Image Picker
+        setFileList([]);
       }
     } catch (err) {
       toast.error(err.response.data.msg);
@@ -130,7 +133,7 @@ export const ProductForm = ({ producto }) => {
     toast.info("Editando el producto...");
     try {
       const urlImagen =
-        fileList.length > 0 ? await loadImage(fileList[0]) : null;
+        fileList.length > 0 ? await loadImage(fileList[0].originFileObj) : null;
       const body = {
         nombre,
         precio,
@@ -140,15 +143,17 @@ export const ProductForm = ({ producto }) => {
         cantidad,
         categoria,
       };
+      console.log("Mandando peticion", urlImagen);
       const { data } = await axiosClient.put(
-        `/productos/producto/${producto._id}`
+        `/productos/producto/${producto._id}`,
+        body
       );
       if (data.ok) {
         toast.success(data.msg);
         router.replace("/products");
       }
     } catch (err) {
-      toast.error(err.response.data.msg);
+      toast.error(err.response);
     }
   };
 
@@ -253,7 +258,7 @@ export const ProductForm = ({ producto }) => {
               </select>
             </div>
 
-            {producto && fileList === 0 && (
+            {producto && fileList.length === 0 && (
               <Fragment>
                 <div>
                   <p>Imagen Actual</p>

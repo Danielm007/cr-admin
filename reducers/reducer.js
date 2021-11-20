@@ -28,6 +28,14 @@ export const Reducer = (state, action) => {
         ),
       };
 
+    case types.toggleProduct:
+      return {
+        ...state,
+        products: state.products.map((prod) =>
+          prod._id === action.payload._id ? action.payload : prod
+        ),
+      };
+
     case types.loadCategories:
       return {
         ...state,

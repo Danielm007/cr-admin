@@ -120,6 +120,15 @@ ul {
   color: black;
 }
 
+.btn:disabled {
+  background-color: gray;
+  color: lightgray;
+}
+
+.btn:disabled:hover {
+  cursor: not-allowed;
+}
+
 /*Estilos para formularios*/
 .form {
   text-align: center;
